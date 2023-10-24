@@ -6,7 +6,7 @@
 /*   By: cypher <cypher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 15:57:19 by mdoulahi          #+#    #+#             */
-/*   Updated: 2023/10/24 17:35:04 by cypher           ###   ########.fr       */
+/*   Updated: 2023/10/25 00:25:59 by cypher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,7 @@ void	*func(void *arg)
 
 	while (holder->data->n_time_to_eat == -1 || holder->philo[i - 1].eat_n_time < holder->data->n_time_to_eat)
 	{
-		if (time_wait_eat + holder->data->time_to_die <= actual_time())
-		{
-				if (isLocked)
-				{
-					pthread_mutex_lock(&(holder->message));
-					printf("%ldms %d  has taken a fork\n", take_fork, i);
-					printf("%ldms %d  has taken a fork\n", take_fork, i);
-					printf("%ldms %d  is eating\n", eat, i);
-					printf("%ldms %d  is sleeping\n", sleep, i);
-					printf("%ldms %d  is thinking\n", actual_time() - start_time, i);
-					printf("%ldms %d dead\n", actual_time() - start_time, i);
-					// pthread_mutex_unlock(&(holder->message));
-				}
-				else
-				{
-					pthread_mutex_lock(&(holder->message));
-					printf("%ldms %d dead\n", actual_time() - start_time, i);
-					// pthread_mutex_unlock(&(holder->message));
-				}
-				return (NULL);
-		}
+
 		if (isLocked)
 		{
 			pthread_mutex_lock(&(holder->message));
@@ -100,10 +80,15 @@ void	*func(void *arg)
 			printf("%ldms %d  is eating\n", eat, i);
 			printf("%ldms %d  is sleeping\n", sleep, i);
 			printf("%ldms %d  is thinking\n", actual_time() - start_time, i);
-			fflush(stdout);
-			pthread_mutex_unlock(&(holder->message));
+			if (time_wait_eat + holder->data->time_to_die <= actual_time())
+			{
+				printf("%ldms %d dead\n", actual_time() - start_time, i);
+				return (NULL);
+			}
 			isLocked = false;
-		}	
+			pthread_mutex_unlock(&(holder->message));
+		}
+	
 		pthread_mutex_lock(&(holder->general_mutex));			
 		if (i - 1 != i % size && holder->fork[i - 1] == 0 && holder->fork[i % size] == 0)
 		{	
