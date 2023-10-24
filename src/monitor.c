@@ -6,7 +6,7 @@
 /*   By: cypher <cypher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 15:57:19 by mdoulahi          #+#    #+#             */
-/*   Updated: 2023/10/25 00:25:59 by cypher           ###   ########.fr       */
+/*   Updated: 2023/10/25 00:28:32 by cypher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	*func(void *arg)
 			if (time_wait_eat + holder->data->time_to_die <= actual_time())
 			{
 				printf("%ldms %d dead\n", actual_time() - start_time, i);
-				return (NULL);
+				exit(0);
 			}
 			isLocked = false;
 			pthread_mutex_unlock(&(holder->message));
