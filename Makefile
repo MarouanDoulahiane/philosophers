@@ -4,7 +4,7 @@ SRC = $(wildcard $(DIR)*.c)
 NAME = philo
 
 all:
-	@cc -Wall -Werror -Wextra $(SRC)
+	@cc -Wall -Werror -Wextra $(SRC) -o philo
 clean:
 
 fclean: clean

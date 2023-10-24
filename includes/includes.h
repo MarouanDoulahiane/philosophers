@@ -6,7 +6,7 @@
 /*   By: cypher <cypher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 03:48:12 by mdoulahi          #+#    #+#             */
-/*   Updated: 2023/10/23 23:25:02 by cypher           ###   ########.fr       */
+/*   Updated: 2023/10/24 04:06:57 by cypher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <limits.h>
+# include <sys/time.h>
 
 typedef struct data
 {
@@ -34,17 +35,19 @@ typedef struct philosophers
 {
 	int		id;
 	int		eat_n_time;
-	bool	able_to_eat;
 }				t_philo;
 
 typedef struct holder
 {
-	t_data	*data;
-	t_philo	*philo;
-	int		i;
-	int		*fork;
+	t_data			*data;
+	t_philo			*philo;
+	int				i;
+	int				*fork;
 	pthread_mutex_t general_mutex;
+	pthread_mutex_t message;
 	pthread_mutex_t *fork_mutex;
+	pthread_t		*th;
+	struct holder	**holder_tofree;
 } t_holder;
 
 
